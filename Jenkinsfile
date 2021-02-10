@@ -45,8 +45,10 @@ spec:
           container('docker') {
             sh 'ls -la'
             docker.withRegistry(ecr, "ecr:us-east-1:ecr.cred") {
-              exec = docker.build("063844947040.dkr.ecr.us-east-1.amazonaws.com/reali-test/reali-test", "--network=host")
-              exec.push("latest")
+              sh """docker build --network="host" -t 063844947040.dkr.ecr.us-east-1.amazonaws.com/reali-test/reali-test .
+              docker push 063844947040.dkr.ecr.us-east-1.amazonaws.com/reali-test/reali-test:latest"""
+              //exec = docker.build("063844947040.dkr.ecr.us-east-1.amazonaws.com/reali-test/reali-test")
+              //exec.push("latest")
             }
           }
         }
