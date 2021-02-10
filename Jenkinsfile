@@ -22,6 +22,9 @@ spec:
     resources:
       requests:
         memory: 128Mi
+  - name: helm
+    image:  alpine/helm:3.5.2
+    tty: true
   - name: docker
     image: stmllr/docker-client:18.03
     tty: true
@@ -43,13 +46,20 @@ spec:
       steps {
         script {
           container('docker') {
-            sh 'ls -la'
             docker.withRegistry(ecr, "ecr:us-east-1:ecr.cred") {
               sh """docker build --network="host" -t 063844947040.dkr.ecr.us-east-1.amazonaws.com/reali-test:latest .
               docker push 063844947040.dkr.ecr.us-east-1.amazonaws.com/reali-test:latest"""
-              //exec = docker.build("063844947040.dkr.ecr.us-east-1.amazonaws.com/reali-test/reali-test")
-              //exec.push("latest")
             }
+          }
+        }
+      }
+    }
+    stage("Deploy helm") {
+      steps {
+        script {
+          container('helm') {
+            sh """helm upgrade --install reali-test ./reali-test --namespace reali-test
+            """
           }
         }
       }
