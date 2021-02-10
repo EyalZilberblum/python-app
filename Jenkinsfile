@@ -25,6 +25,8 @@ spec:
   - name: helm
     image:  alpine/helm:3.5.2
     tty: true
+    command: 
+    - cat
   - name: docker
     image: stmllr/docker-client:18.03
     tty: true
