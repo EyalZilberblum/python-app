@@ -1,3 +1,4 @@
+//declaration
 def ecr = "https://063844947040.dkr.ecr.us-east-1.amazonaws.com"
 def dockerLabel = "jenkins-slave-${UUID.randomUUID().toString()}"
 
